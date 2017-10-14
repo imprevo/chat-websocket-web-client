@@ -7,11 +7,12 @@ import Sidebar from './sidebar';
 
 const drawerWidth = 240;
 
-const styles = theme => ({
+const styles = (theme) => ({
     root: {
         width: '100%',
         zIndex: 1,
         overflow: 'hidden',
+        backgroundColor: theme.palette.background.default,
     },
     appFrame: {
         width: '100%',
@@ -23,7 +24,6 @@ const styles = theme => ({
         width: '100%',
         marginLeft: -drawerWidth,
         flexGrow: 1,
-        backgroundColor: theme.palette.background.default,
         padding: theme.spacing.unit * 3,
         transition: theme.transitions.create('margin', {
             easing: theme.transitions.easing.sharp,
