@@ -1,7 +1,9 @@
 import React, {Component} from 'react';
+import PropTypes from 'prop-types';
 import {bindActionCreators} from 'redux'
 import {connect} from 'react-redux';
-import PropTypes from 'prop-types';
+import Button from 'material-ui/Button';
+import Input from 'material-ui/Input';
 import {pushMessage} from '../thunks/chatThunks';
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
@@ -31,12 +33,12 @@ class ChatInputContainer extends Component {
 
     render() {
         return (
-            <div>
-                <form onSubmit={this.sendMessage}>
-                    <input type="text" onChange={this.onChange}/>
-                    <button>send</button>
-                </form>
-            </div>
+            <form onSubmit={this.sendMessage}>
+                <Input type="text" placeholder="Enter message" onChange={this.onChange}/>
+                <Button raised color="primary">
+                    Send
+                </Button>
+            </form>
         );
     }
 }
