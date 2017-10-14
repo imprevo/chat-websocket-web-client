@@ -20,7 +20,7 @@ const drawerWidth = 240;
 const styles = theme => ({
     drawerPaper: {
         position: 'relative',
-        height: '100%',
+        maxHeight: '100%',
         width: drawerWidth,
         overflowX: 'hidden',
     },
