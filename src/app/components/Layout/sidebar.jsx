@@ -31,6 +31,9 @@ const styles = theme => ({
         padding: '0 8px',
         ...theme.mixins.toolbar,
     },
+    iconExpand: {
+        marginRight: 0,
+    },
     nested: {
         paddingLeft: theme.spacing.unit * 4,
     },
@@ -88,7 +91,9 @@ class Sidebar extends React.Component {
                             <InboxIcon/>
                         </ListItemIcon>
                         <ListItemText inset primary="3"/>
-                        {openNested ? <ExpandLess/> : <ExpandMore/>}
+                        <ListItemIcon className={classes.iconExpand}>
+                            {openNested ? <ExpandLess/> : <ExpandMore/>}
+                        </ListItemIcon>
                     </ListItem>
                     <Collapse in={openNested} transitionDuration="auto" unmountOnExit>
                         <ListItem button className={classes.nested}>
