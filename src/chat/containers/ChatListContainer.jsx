@@ -6,11 +6,14 @@ import List, {ListItem, ListItemText} from 'material-ui/List';
 import Avatar from 'material-ui/Avatar';
 import {getChatMessages} from '../selectors/chatSelectors';
 
-const styles = theme => ({
+const styles = (theme) => ({
     root: {
         width: '100%',
-        maxWidth: 360,
+        flex: 'auto',
+        overflowY: 'auto',
+        height: 0,
         background: theme.palette.background.paper,
+        marginBottom: theme.spacing.unit * 2,
     },
     avatar: {
         width: 32,
@@ -24,6 +27,7 @@ const mapStateToProps = (state) => ({
 
 class ChatListContainer extends Component {
     static propTypes = {
+        classes: PropTypes.object.isRequired,
         messages: PropTypes.arrayOf(
             PropTypes.shape({
                 message: PropTypes.string,
@@ -32,7 +36,7 @@ class ChatListContainer extends Component {
     };
 
     render() {
-        const {messages, classes} = this.props;
+        const {classes, messages} = this.props;
 
         return (
             <div className={classes.root}>
