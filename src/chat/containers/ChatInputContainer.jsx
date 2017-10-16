@@ -47,15 +47,32 @@ class ChatInputContainer extends Component {
     sendMessage = (e) => {
         e.preventDefault();
 
-        this.props.pushMessage(this.state.message);
+        const {message} = this.state;
+
+        if (!message) {
+            return false;
+        }
+
+        this.props.pushMessage(message);
+        this.setState({
+            message: '',
+        });
     };
 
     render() {
         const {classes} = this.props;
+        const {message} = this.state;
+
         return (
             <form className={classes.form} onSubmit={this.sendMessage}>
-                <Input className={classes.input} type="text" placeholder="Enter message" onChange={this.onChange}/>
-                <Button raised color="primary">
+                <Input
+                    className={classes.input}
+                    value={message}
+                    type="text"
+                    placeholder="Enter message"
+                    onChange={this.onChange}
+                />
+                <Button type="submit" raised color="primary">
                     Send
                 </Button>
             </form>
