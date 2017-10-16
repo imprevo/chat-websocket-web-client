@@ -6,6 +6,8 @@ import List, {ListItem, ListItemText} from 'material-ui/List';
 import Avatar from 'material-ui/Avatar';
 import {getChatMessages} from '../selectors/chatSelectors';
 
+const calculationError = 1;
+
 const styles = (theme) => ({
     root: {
         width: '100%',
@@ -18,7 +20,7 @@ const styles = (theme) => ({
     avatar: {
         width: 32,
         height: 32,
-    }
+    },
 });
 
 const mapStateToProps = (state) => ({
@@ -35,11 +37,41 @@ class ChatListContainer extends Component {
         ),
     };
 
+    refScrollArea = null;
+
+    wasUserScroll = false;
+
+    setRefScrollArea = (ref) => {
+        this.refScrollArea = ref;
+    };
+
+    componentDidMount() {
+        this.scrollToBottom();
+    }
+
+    componentDidUpdate(prevProps) {
+        if (!this.wasUserScroll && this.props.messages.length !== prevProps.messages.length) {
+            this.scrollToBottom();
+        }
+    }
+
+    onScroll = () => {
+        const scrollBottom = this.refScrollArea.scrollTop + this.refScrollArea.offsetHeight;
+
+        // if scroll area is scrolled to the bottom
+        // set wasUserScroll to false
+        this.wasUserScroll = scrollBottom + calculationError < this.refScrollArea.scrollHeight;
+    };
+
+    scrollToBottom() {
+        this.refScrollArea.scrollTop = this.refScrollArea.scrollHeight;
+    }
+
     render() {
         const {classes, messages} = this.props;
 
         return (
-            <div className={classes.root}>
+            <div className={classes.root} ref={this.setRefScrollArea} onScroll={this.onScroll}>
                 <List>
                     {messages.map((msg, key) => (
                         <ListItem key={key} dense>
