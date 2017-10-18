@@ -1,10 +1,9 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import {connect} from 'react-redux';
+import {observer} from 'mobx-react';
 import {withStyles} from 'material-ui/styles';
 import List, {ListItem, ListItemText} from 'material-ui/List';
 import Avatar from 'material-ui/Avatar';
-import {getChatMessages} from '../selectors/chatSelectors';
 
 const calculationError = 1;
 
@@ -21,10 +20,6 @@ const styles = (theme) => ({
         width: 32,
         height: 32,
     },
-});
-
-const mapStateToProps = (state) => ({
-    messages: getChatMessages(state),
 });
 
 class ChatListContainer extends Component {
@@ -87,4 +82,4 @@ class ChatListContainer extends Component {
     }
 }
 
-export default withStyles(styles)(connect(mapStateToProps)(ChatListContainer));
+export default withStyles(styles)(observer(ChatListContainer));

@@ -1,9 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {Provider} from 'react-redux';
-import {MuiThemeProvider, createMuiTheme} from 'material-ui/styles';
-import {Layout, store} from 'app';
-import {View as ChatView} from 'chat';
+import {createMuiTheme, MuiThemeProvider} from 'material-ui/styles';
+import {Layout} from 'app';
+import {store, View} from 'chat';
+
+store.addMessage({message: 'Hello world!'});
 
 const theme = createMuiTheme({
     palette: {
@@ -13,14 +14,12 @@ const theme = createMuiTheme({
 
 function renderRoot(Root, rootStore) {
     ReactDOM.render(
-        <Provider store={rootStore}>
-            <MuiThemeProvider theme={theme}>
-                <Layout>
-                    <Root/>
-                </Layout>
-            </MuiThemeProvider>
-        </Provider>
+        <MuiThemeProvider theme={theme}>
+            <Layout>
+                <Root store={rootStore}/>
+            </Layout>
+        </MuiThemeProvider>
         , document.getElementById('root'));
 }
 
-renderRoot(ChatView, store);
+renderRoot(View, store);
