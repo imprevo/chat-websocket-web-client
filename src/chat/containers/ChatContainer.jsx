@@ -1,14 +1,11 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import {bindActionCreators} from 'redux'
-import {connect} from 'react-redux';
+import {observer} from 'mobx-react';
 import {withStyles} from 'material-ui/styles';
 import Avatar from 'material-ui/Avatar';
 import Chip from 'material-ui/Chip';
 import Warning from 'material-ui-icons/Warning';
 import red from 'material-ui/colors/red';
-import {subscribeToPull, unsubscribeToPull} from '../thunks/chatThunks';
-import {isConnected} from '../selectors/chatSelectors';
 import ChatListContainer from './ChatListContainer';
 import ChatInputContainer from './ChatInputContainer';
 
@@ -36,42 +33,31 @@ const ChipConnection = ({classes}) => (
     />
 );
 
-const mapStateToProps = (state) => ({
-    connected: isConnected(state),
-});
-
-const mapDispatchToProps = (dispatch) => bindActionCreators({
-    subscribeToPull,
-    unsubscribeToPull,
-}, dispatch);
-
 class ChatContainer extends Component {
     static propTypes = {
         classes: PropTypes.object.isRequired,
-        connected: PropTypes.bool,
-        subscribeToPull: PropTypes.func,
-        unsubscribeToPull: PropTypes.func,
+        store: PropTypes.object,
     };
 
     componentDidMount() {
-        this.props.subscribeToPull();
+        this.props.store.subscribeToPull();
     }
 
     componentWillUnmount() {
-        this.props.unsubscribeToPull();
+        this.props.store.unsubscribeToPull();
     }
 
     render() {
-        const {classes, connected} = this.props;
+        const {classes, store} = this.props;
 
         return (
             <div className={classes.root}>
-                {!connected ? (<ChipConnection classes={classes}/>) : null}
-                <ChatListContainer/>
-                <ChatInputContainer/>
+                {!store.connected ? (<ChipConnection classes={classes}/>) : null}
+                <ChatListContainer messages={store.messages}/>
+                <ChatInputContainer store={store}/>
             </div>
         );
     }
 }
 
-export default withStyles(styles)(connect(mapStateToProps, mapDispatchToProps)(ChatContainer));
+export default (withStyles(styles))(observer(ChatContainer));

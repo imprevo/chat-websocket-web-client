@@ -1,11 +1,9 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import {bindActionCreators} from 'redux'
-import {connect} from 'react-redux';
+import {observer} from 'mobx-react';
 import {withStyles} from 'material-ui/styles';
 import Button from 'material-ui/Button';
 import Input from 'material-ui/Input';
-import {pushMessage} from '../thunks/chatThunks';
 
 const styles = (theme) => ({
     root: {
@@ -24,14 +22,10 @@ const styles = (theme) => ({
     },
 });
 
-const mapDispatchToProps = (dispatch) => bindActionCreators({
-    pushMessage,
-}, dispatch);
-
 class ChatInputContainer extends Component {
     static propTypes = {
         classes: PropTypes.object.isRequired,
-        pushMessage: PropTypes.func,
+        store: PropTypes.object,
     };
 
     state = {
@@ -53,7 +47,7 @@ class ChatInputContainer extends Component {
             return false;
         }
 
-        this.props.pushMessage(message);
+        this.props.store.pushMessage(message);
         this.setState({
             message: '',
         });
@@ -80,4 +74,4 @@ class ChatInputContainer extends Component {
     }
 }
 
-export default withStyles(styles)(connect(null, mapDispatchToProps)(ChatInputContainer));
+export default withStyles(styles)(observer(ChatInputContainer));
