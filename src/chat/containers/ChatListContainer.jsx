@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import {observer} from 'mobx-react';
+import {observer, PropTypes as MobxPropTypes} from 'mobx-react';
 import {withStyles} from 'material-ui/styles';
 import List, {ListItem, ListItemText} from 'material-ui/List';
 import Avatar from 'material-ui/Avatar';
@@ -25,7 +25,7 @@ const styles = (theme) => ({
 class ChatListContainer extends Component {
     static propTypes = {
         classes: PropTypes.object.isRequired,
-        messages: PropTypes.arrayOf(
+        messages: MobxPropTypes.observableArrayOf(
             PropTypes.shape({
                 message: PropTypes.string,
             })

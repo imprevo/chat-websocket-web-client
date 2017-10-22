@@ -31,7 +31,7 @@ const styles = (theme) => ({
         marginRight: 0,
     },
     nested: {
-        paddingLeft: theme.spacing.unit && theme.spacing.unit * 4,
+        paddingLeft: theme.spacing.unit * 4,
     },
 });
 
