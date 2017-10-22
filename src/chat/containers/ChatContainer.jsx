@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import {observer} from 'mobx-react';
+import {inject, observer} from 'mobx-react';
 import {withStyles} from 'material-ui/styles';
 import Avatar from 'material-ui/Avatar';
 import Chip from 'material-ui/Chip';
@@ -60,4 +60,10 @@ class ChatContainer extends Component {
     }
 }
 
-export default (withStyles(styles))(observer(ChatContainer));
+function mapStoresToProps({chatStore}) {
+    return {
+        store: chatStore,
+    };
+}
+
+export default (withStyles(styles))(inject(mapStoresToProps)(observer(ChatContainer)));
