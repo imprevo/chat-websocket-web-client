@@ -1,23 +1,19 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import {Link} from 'react-router-dom';
 import {withStyles} from 'material-ui/styles';
 import Drawer from 'material-ui/Drawer';
 import List, {ListItem, ListItemIcon, ListItemText} from 'material-ui/List';
 import Divider from 'material-ui/Divider';
 import IconButton from 'material-ui/IconButton';
-import Collapse from 'material-ui/transitions/Collapse';
-import InboxIcon from 'material-ui-icons/MoveToInbox';
-import DraftsIcon from 'material-ui-icons/Drafts';
-import SendIcon from 'material-ui-icons/Send';
-import ExpandLess from 'material-ui-icons/ExpandLess';
-import ExpandMore from 'material-ui-icons/ExpandMore';
-import StarBorder from 'material-ui-icons/StarBorder';
 import ChevronLeftIcon from 'material-ui-icons/ChevronLeft';
 import ChevronRightIcon from 'material-ui-icons/ChevronRight';
+import HomeIcon from 'material-ui-icons/Home';
+import ChatIcon from 'material-ui-icons/Chat';
 
 const drawerWidth = 240;
 
-const styles = theme => ({
+const styles = (theme) => ({
     drawerPaper: {
         position: 'relative',
         maxHeight: '100%',
@@ -25,11 +21,11 @@ const styles = theme => ({
         overflowX: 'hidden',
     },
     drawerHeader: {
+        ...theme.mixins.toolbar,
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'flex-end',
-        padding: '0 8px',
-        ...theme.mixins.toolbar,
+        padding: `0 ${theme.spacing.unit}px`,
     },
     iconExpand: {
         marginRight: 0,
@@ -47,17 +43,8 @@ class Sidebar extends React.Component {
         handleDrawerClose: PropTypes.func.isRequired,
     };
 
-    state = {
-        openNested: true,
-    };
-
-    handleClick = () => {
-        this.setState({openNested: !this.state.openNested});
-    };
-
     render() {
         const {classes, theme, open, handleDrawerClose} = this.props;
-        const {openNested} = this.state;
 
         return (
             <Drawer
@@ -74,35 +61,18 @@ class Sidebar extends React.Component {
                 </div>
                 <Divider/>
                 <List className={classes.list}>
-                    <ListItem button>
+                    <ListItem button component={Link} to="/">
                         <ListItemIcon>
-                            <SendIcon/>
+                            <HomeIcon/>
                         </ListItemIcon>
-                        <ListItemText inset primary="1"/>
+                        <ListItemText inset primary="Home"/>
                     </ListItem>
-                    <ListItem button>
+                    <ListItem button component={Link} to="/chat">
                         <ListItemIcon>
-                            <DraftsIcon/>
+                            <ChatIcon/>
                         </ListItemIcon>
-                        <ListItemText inset primary="2"/>
+                        <ListItemText inset primary="Chat"/>
                     </ListItem>
-                    <ListItem button onClick={this.handleClick}>
-                        <ListItemIcon>
-                            <InboxIcon/>
-                        </ListItemIcon>
-                        <ListItemText inset primary="3"/>
-                        <ListItemIcon className={classes.iconExpand}>
-                            {openNested ? <ExpandLess/> : <ExpandMore/>}
-                        </ListItemIcon>
-                    </ListItem>
-                    <Collapse in={openNested} transitionDuration="auto" unmountOnExit>
-                        <ListItem button className={classes.nested}>
-                            <ListItemIcon>
-                                <StarBorder/>
-                            </ListItemIcon>
-                            <ListItemText inset primary="3.1"/>
-                        </ListItem>
-                    </Collapse>
                 </List>
             </Drawer>
         );

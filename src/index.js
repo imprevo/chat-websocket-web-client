@@ -1,10 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import {HashRouter as Router} from 'react-router-dom';
+import {Provider} from 'mobx-react';
 import {createMuiTheme, MuiThemeProvider} from 'material-ui/styles';
 import {Layout} from 'app';
-import {store, View} from 'chat';
+import {store as chatStore} from 'chat';
+import Routes from './routes';
 
-store.addMessage({message: 'Hello world!'});
+chatStore.addMessage({message: 'Hello world!'});
 
 const theme = createMuiTheme({
     palette: {
@@ -12,14 +15,21 @@ const theme = createMuiTheme({
     },
 });
 
-function renderRoot(Root, rootStore) {
+function renderRoot(Root, stores) {
     ReactDOM.render(
-        <MuiThemeProvider theme={theme}>
-            <Layout>
-                <Root store={rootStore}/>
-            </Layout>
-        </MuiThemeProvider>
-        , document.getElementById('root'));
+        <Provider {...stores}>
+            <Router>
+                <MuiThemeProvider theme={theme}>
+                    <Layout>
+                        <Root/>
+                    </Layout>
+                </MuiThemeProvider>
+            </Router>
+        </Provider>
+        , document.getElementById('root')
+    );
 }
 
-renderRoot(View, store);
+renderRoot(Routes, {
+    chatStore,
+});
