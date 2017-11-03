@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import {inject, observer} from 'mobx-react';
+import {inject, observer, PropTypes as MobxPropTypes} from 'mobx-react';
 import {withStyles} from 'material-ui/styles';
 import Card, { CardActions, CardContent } from 'material-ui/Card';
 import Typography from 'material-ui/Typography';
@@ -14,7 +14,7 @@ const styles = (theme) => ({
 class GameItem extends Component {
     static propTypes = {
         classes: PropTypes.object.isRequired,
-        gameModel: PropTypes.object.isRequired,
+        gameModel: MobxPropTypes.observableObject.isRequired,
     };
 
     increase = () => {
@@ -28,7 +28,7 @@ class GameItem extends Component {
             <Card className={classes.root}>
                 <CardContent>
                     <Typography type="headline" component="h2">
-                        Title
+                        {gameModel.name}
                     </Typography>
                     <Typography type="body1">
                         count: {gameModel.count}

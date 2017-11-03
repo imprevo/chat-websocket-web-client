@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import {inject, observer} from 'mobx-react';
+import {inject, observer, PropTypes as MobxPropTypes} from 'mobx-react';
 import {withStyles} from 'material-ui/styles';
 import { GridList, GridListTile } from 'material-ui/GridList';
 import Subheader from 'material-ui/List/ListSubheader';
@@ -23,8 +23,8 @@ const styles = (theme) => ({
 class GameContainer extends Component {
     static propTypes = {
         classes: PropTypes.object.isRequired,
-        gameStore: PropTypes.object.isRequired,
-    };
+        gameStore: MobxPropTypes.observableObject.isRequired,
+   };
 
     increase = () => {
         this.props.gameStore.increase();
@@ -40,7 +40,7 @@ class GameContainer extends Component {
                         <Subheader>Clicker</Subheader>
                     </GridListTile>
 
-                    {gameStore.data.map((item, key) => (<GameItem key={key} gameModel={item} />))}
+                    {gameStore.list.map((item, key) => (<GameItem key={key} gameModel={item} />))}
                 </GridList>
             </div>
         );

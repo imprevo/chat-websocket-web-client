@@ -2,16 +2,16 @@ import {extendObservable} from 'mobx';
 import GameModel from '../models/GameModel';
 
 class GameStore {
-    data;
+    list;
 
     constructor() {
         extendObservable(this, {
-            data: [],
+            list: [],
         });
     }
 
-    add(startWith){
-        this.data.push(new GameModel(startWith));
+    add(name, count){
+        this.list.push(new GameModel(name, count));
     }
 }
 

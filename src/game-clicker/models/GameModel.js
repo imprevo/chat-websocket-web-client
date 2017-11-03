@@ -1,11 +1,13 @@
 import {extendObservable} from 'mobx';
 
 class GameModel {
+    name;
     count;
 
-    constructor(startWith = 0) {
+    constructor(name, count = 0) {
         extendObservable(this, {
-            count: startWith,
+            name,
+            count,
         });
     }
 
