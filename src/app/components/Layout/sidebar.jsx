@@ -10,6 +10,7 @@ import ChevronLeftIcon from 'material-ui-icons/ChevronLeft';
 import ChevronRightIcon from 'material-ui-icons/ChevronRight';
 import HomeIcon from 'material-ui-icons/Home';
 import ChatIcon from 'material-ui-icons/Chat';
+import MouseIcon from 'material-ui-icons/Mouse';
 
 const drawerWidth = 240;
 
@@ -72,6 +73,12 @@ class Sidebar extends React.Component {
                             <ChatIcon/>
                         </ListItemIcon>
                         <ListItemText inset primary="Chat"/>
+                    </ListItem>
+                    <ListItem button component={Link} to="/clicker">
+                        <ListItemIcon>
+                            <MouseIcon/>
+                        </ListItemIcon>
+                        <ListItemText inset primary="Clicker"/>
                     </ListItem>
                 </List>
             </Drawer>
